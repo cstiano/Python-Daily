@@ -15,7 +15,7 @@ count = 1
 for elem in img_list[init:end]:
 	img = cv2.imread(folder_path+elem)
 	img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-	coeffs = pywt.dwt2(img, 'db1')
+	coeffs = pywt.dwt2(img, 'db8')
 	cA, (cH,cV,cD) = coeffs
 	apro_zer = mahotas.features.zernike_moments(cA,128)
 	hor_zer = mahotas.features.zernike_moments(cH,128)
@@ -34,15 +34,15 @@ for elem in img_list[init:end]:
 	sum_mat = np.concatenate((up_mat, down_mat), axis = 0)
 
 	sum_zer = mahotas.features.zernike_moments(sum_mat,362.04)
-	print sum_zer.tolist()
-	plt.imshow(sum_mat)
-	plt.show()
-	# print apro_zer.tolist()
-	# print hor_zer.tolist()
-	# print ver_zer.tolist()
-	# print dia_zer.tolist()
-	# if(count>5):
-	break
+	# print sum_zer.tolist()
+	# plt.imshow(sum_mat)
+	# plt.show()
+	print apro_zer.tolist()
+	print hor_zer.tolist()
+	print ver_zer.tolist()
+	print dia_zer.tolist()
+	if(count>5):
+		break
 	count+=1
 	print len(img.tolist()), len(cH.tolist())
 
