@@ -28,21 +28,21 @@ for elem in img_list[init:end]:
 	# print cV
 	suma = np.sum([cV,cH,cD], axis=0)
 	# print suma
-	# fig, ax = plt.subplots()
+	fig, ax = plt.subplots()
 	up_mat = np.concatenate((cA, cH), axis = 1)
 	down_mat = np.concatenate((cV, cD), axis = 1)
 	sum_mat = np.concatenate((up_mat, down_mat), axis = 0)
 
 	sum_zer = mahotas.features.zernike_moments(sum_mat,362.04)
 	# print sum_zer.tolist()
-	# plt.imshow(sum_mat)
-	# plt.show()
+	plt.imshow(sum_mat)
+	plt.show()
 	print apro_zer.tolist()
 	print hor_zer.tolist()
 	print ver_zer.tolist()
 	print dia_zer.tolist()
-	if(count>5):
-		break
+	# if(count>5):
+	break
 	count+=1
 	print len(img.tolist()), len(cH.tolist())
 
