@@ -1,6 +1,8 @@
 // call_socket.c - A sample program to 
 // demonstrate the TCP client
 //
+// install the dependence sudo apt-get install libjsoncpp-dev
+
 #ifdef WIN32
 #include <sys/types.h>
 #include <Winsock2.h>
@@ -15,9 +17,13 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <jsoncpp/json/json.h>
+
 #define MAX_BUFFER    128
 #define HOST        "127.0.0.1"
 #define PORT         50007
+
+#include <jsoncpp/json/json.h>
 
 int main ()
 {
@@ -53,7 +59,7 @@ int main ()
       (struct sockaddr *)&servAddr, sizeof(servAddr));
 
   // Send request to Server
-  sprintf( buffer, "%s", "Hello, Server!" );
+  sprintf( buffer, "%s", "{\"robo1\":{\"x\":1,\"y\":2}, \"robo2\":{\"x\":3,\"y\":4}}" );
   send( connectionFd, buffer, strlen(buffer), 0 );
  
   printf("Client sent to sever %s\n", buffer);
@@ -61,6 +67,16 @@ int main ()
   // Receive data from Server
   sprintf( buffer, "%s", "" );
   recv(connectionFd, buffer, MAX_BUFFER, 0);
+
+  std::string strJson = buffer;
+  Json::Value root;
+  Json::Reader reader;
+  bool parsingSuccessful = reader.parse(strJson.c_str(), root);
+  if(!parsingSuccessful){
+    std::cout<<"Failed to parse"<<std::endl;
+  }
+  std::cout<<"Object json - "<<root.get("robo1","A Default Value if not exists")<<std::endl;
+
   printf("Client read from Server %s\n", buffer);
 
 #ifdef WIN32
