@@ -1,0 +1,9 @@
+syntax = "proto2";
+
+package teste_objeto;
+
+message Robo{
+	required int32 id = 1;
+	required float x = 2;
+	required float y = 3;
+}
